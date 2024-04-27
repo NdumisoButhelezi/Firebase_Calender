@@ -13,14 +13,31 @@
         android:theme="@style/Theme.FirebaseCalender"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".AppointmentStatusActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:label="@string/title_activity_login"
+            android:theme="@style/Theme.FirebaseCalender">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PatientDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegistrationActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

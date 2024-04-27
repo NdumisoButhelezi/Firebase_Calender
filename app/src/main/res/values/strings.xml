@@ -1,9 +1,3 @@
 <resources>
     <string name="app_name">Firebase Calender</string>
-    <string name="name">Name</string>
-    <string name="save_event">Save event</string>
-    <string name="notes">Notes</string>
-    <string name="select_date">Select Date</string>
-    <string name="select_slot">Pick Time Slot</string>
-    <string name="book_slot">Book Slot</string>
 </resources>
