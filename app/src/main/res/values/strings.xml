@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Firebase Calender</string>
+    <string name="name">Name</string>
+    <string name="save_event">Save event</string>
 </resources>

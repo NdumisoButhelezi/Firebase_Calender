@@ -1,5 +1,6 @@
 package com.example.firebasecalender;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CalendarView;
@@ -8,16 +9,23 @@ import android.widget.EditText;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private calendarView calenderView;
+    private CalendarView calenderView;
+
+
     private EditText editText;
 
     private String stringDateSelected;
+
+    private DatabaseReference databaseReference;
 
 
 
@@ -39,14 +47,34 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
+
 
     }
 
     private void calenderClicked(){
+        databaseReference.child(stringDateSelected).addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue()!= null){
+                    editText.setText(snapshot.getValue().toString());
+                }else {
+                    editText.setText("null");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
     }
 
     public void buttonSaveEvent(View view){
+        databaseReference.child(stringDateSelected).setValue(editText.getText().toString());
 
     }
 }
