@@ -3,8 +3,11 @@ package com.example.firebasecalender;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -16,14 +19,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
 
-    private CalendarView calenderView;
+    private DatePicker datePicker;
 
 
-    private EditText editText;
+    private Spinner timeSlot;
 
-    private String stringDateSelected;
+    private Button btn;
 
     private DatabaseReference databaseReference;
 
@@ -35,46 +40,59 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        calenderView =findViewById(R.id.calendarView);
-        editText = findViewById(R.id.editText);
+        datePicker =findViewById(R.id.datePicker);
+        timeSlot = findViewById(R.id.spinnerTimeSlots);
 
-        calenderView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView calenderView,int i,int i1, int i2){
-                stringDateSelected = Integer.toString(i) + Integer.toString(i1+1) + Integer.toString(i2);
-                calenderClicked();
-            }
-
-        });
+        setupDatePicker();
+        buttonSaveEvent();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
 
 
     }
 
-    private void calenderClicked(){
-        databaseReference.child(stringDateSelected).addListenerForSingleValueEvent(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
+    private void setupDatePicker() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, 1);  // Start from the next day
+
+        // Set the minimum date to tomorrow
+        datePicker.setMinDate(calendar.getTimeInMillis());
+
+        // Disable weekends in the DatePicker dialog
+        datePicker.setCalendarViewShown(false); // Deprecate the calendar view
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(datePicker.getMinDate());
+        while (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            cal.add(Calendar.DAY_OF_YEAR, 1);
+            datePicker.setMinDate(cal.getTimeInMillis());
+        }
+
+        datePicker.init(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue()!= null){
-                    editText.setText(snapshot.getValue().toString());
-                }else {
-                    editText.setText("null");
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                if (newDate.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || newDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                    if (newDate.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+                        newDate.add(Calendar.DAY_OF_MONTH, 2); // Skip to Monday
+                    } else {
+                        newDate.add(Calendar.DAY_OF_MONTH, 1); // Skip to Monday
+                    }
+                    datePicker.updateDate(newDate.get(Calendar.YEAR), newDate.get(Calendar.MONTH), newDate.get(Calendar.DAY_OF_MONTH));
                 }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
         });
-
-
     }
 
-    public void buttonSaveEvent(View view){
-        databaseReference.child(stringDateSelected).setValue(editText.getText().toString());
+    public void buttonSaveEvent(){
+        btn = findViewById(R.id.btnBook);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseReference.child(String.valueOf(datePicker)).setValue(timeSlot.getSelectedItem().toString());
+            }
+        });
 
     }
 }
