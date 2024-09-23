@@ -3,39 +3,69 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Booked Appointments"
+        android:text="Admin Dashboard"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginTop="16dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/bookingsRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <Button
+        android:id="@+id/viewPendingButton"
+        android:layout_width="114dp"
+        android:layout_height="74dp"
+        android:layout_margin="8dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:text="View Pending"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+
+    <Button
+        android:id="@+id/viewAcceptedButton"
+        android:layout_width="121dp"
+        android:layout_height="71dp"
+        android:layout_margin="8dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:text="View Accepted"
+        app:layout_constraintStart_toEndOf="@id/viewPendingButton"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+
+    <Button
+        android:id="@+id/viewDeclinedButton"
+        android:layout_width="121dp"
+        android:layout_height="72dp"
+        android:layout_margin="8dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:text="View Declined"
+        app:layout_constraintStart_toEndOf="@id/viewAcceptedButton"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
     <TextView
         android:id="@+id/emptyStateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No pending bookings"
-        android:textSize="18sp"
+        android:text="No bookings available"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        app:layout_constraintTop_toBottomOf="@id/viewPendingButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bookingsRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/emptyStateTextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

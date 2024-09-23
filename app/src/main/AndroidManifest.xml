@@ -32,9 +32,7 @@
         <activity
             android:name=".AdminDashboardActivity"
             android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+
         <activity
             android:name=".RegistrationActivity"
             android:exported="true" />

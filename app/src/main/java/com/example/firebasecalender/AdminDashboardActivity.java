@@ -1,10 +1,12 @@
 package com.example.firebasecalender;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private TextView titleTextView;
     private TextView emptyStateTextView;
+    private Button viewPendingButton, viewAcceptedButton, viewDeclinedButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +36,24 @@ public class AdminDashboardActivity extends AppCompatActivity {
         titleTextView = findViewById(R.id.titleTextView);
         recyclerView = findViewById(R.id.bookingsRecyclerView);
         emptyStateTextView = findViewById(R.id.emptyStateTextView);
+        viewPendingButton = findViewById(R.id.viewPendingButton);
+        viewAcceptedButton = findViewById(R.id.viewAcceptedButton);
+        viewDeclinedButton = findViewById(R.id.viewDeclinedButton);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         db = FirebaseFirestore.getInstance();
-        loadBookings();
+
+        // Load pending bookings by default
+        loadBookings("pending");
+
+        viewPendingButton.setOnClickListener(v -> loadBookings("pending"));
+        viewAcceptedButton.setOnClickListener(v -> loadBookings("accepted"));
+        viewDeclinedButton.setOnClickListener(v -> loadBookings("declined"));
     }
 
-    private void loadBookings() {
+    private void loadBookings(String status) {
         db.collection("bookings")
-                .whereEqualTo("status", "pending")
+                .whereEqualTo("status", status)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     List<Booking> bookings = new ArrayList<>();
@@ -68,8 +80,6 @@ public class AdminDashboardActivity extends AppCompatActivity {
                     e.printStackTrace();
                 });
     }
-
-
     public void handleBookingAction(Booking booking, boolean isAccepted) {
         String newStatus = isAccepted ? "accepted" : "declined";
 

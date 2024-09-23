@@ -16,36 +16,67 @@
         android:padding="16dp">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date:"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/dateTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Time:"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="@android:color/white"/>
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:id="@+id/timeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reason:"
+            android:textColor="@android:color/white"
             android:textSize="14sp"
-            android:layout_marginTop="4dp"
-            android:textColor="@android:color/white"/>
+            android:textStyle="bold"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:id="@+id/reasonTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email:"
+            android:textColor="@android:color/white"
             android:textSize="14sp"
-            android:layout_marginTop="4dp"
-            android:textColor="@android:color/white"/>
+            android:textStyle="bold"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:id="@+id/emailTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,22 +86,22 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/acceptButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Accept"
+                android:layout_marginEnd="8dp"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_marginEnd="8dp"/>
+                android:text="Accept" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/declineButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Decline"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+                android:text="Decline" />
 
         </LinearLayout>
 

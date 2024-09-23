@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">Firebase Calender</string>
+    <string name="app_name">Firebase Calendar</string>
+    <string name="title_activity_login">Login</string>
+    <string name="name">Your Name</string>
+    <string name="save_event">Save Event</string>
+    <string name="prompt_email">Enter your email</string>
+    <string name="action_sign_in_short">Sign In</string>
+    <string name="prompt_password">Enter your password</string>
+    <string name="action_sign_in">Sign In</string>
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
 </resources>
